@@ -29,10 +29,13 @@ def check_ssl(hostname, port=443):
     :rtype: datetime object
     """
     context = ssl.create_default_context()
-
-    with socket.create_connection((hostname, port)) as sock:
-        with context.wrap_socket(sock, server_hostname=hostname) as ssock:
-            data = ssock.getpeercert()
+    try:
+        with socket.create_connection((hostname, port), timeout=1) as sock:
+            with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+                data = ssock.getpeercert()
+    except:
+        click.secho(f"{hostname} timed out", fg="red")
+        return
     expiry = datetime.strptime(data["notAfter"], "%b %d %H:%M:%S %Y %Z")
     now = datetime.utcnow()
     expiries_in = expiry - now
