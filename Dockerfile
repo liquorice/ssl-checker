@@ -10,6 +10,6 @@ COPY Pipfile* ./
 
 RUN pipenv install --system
 
-COPY . .
+COPY . ./
 
 CMD [ "python", "./ssl-checker.py", "check-all-ssl" ]
