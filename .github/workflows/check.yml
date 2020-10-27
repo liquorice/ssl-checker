@@ -9,8 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+
       - name: build image
-        run: docker build -t ssl-cert .
+        run: docker build . -t ssl-cert
 
       - name: run check
         run: docker run --env MG_KEY=${{ secrets.MG_KEY }} ssl-cert
