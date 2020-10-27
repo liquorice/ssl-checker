@@ -1,0 +1,16 @@
+name: SSL Checker
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  check-ssl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: build image
+        run: docker build -t ssl-cert .
+
+      - name: run check
+        run: docker run --env MG_KEY=${{ secrets.MG_KEY }} ssl-cert

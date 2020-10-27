@@ -6,6 +6,7 @@ import ssl
 from datetime import datetime
 from datetime import timedelta
 import click
+from mailgun import send_email
 
 
 @click.group()
@@ -35,6 +36,7 @@ def check_ssl(hostname, port=443):
                 data = ssock.getpeercert()
     except:
         click.secho(f"{hostname} timed out", fg="red")
+        send_email(hostname, "timed out", "")
         return
     expiry = datetime.strptime(data["notAfter"], "%b %d %H:%M:%S %Y %Z")
     now = datetime.utcnow()
@@ -42,6 +44,7 @@ def check_ssl(hostname, port=443):
     colour = "green"
     if expiries_in.days < 14:
         colour = "red"
+        send_email(hostname, expiries_in.days, expiry)
     click.secho(
         "{} expires in {} days on {}".format(hostname, expiries_in.days, expiry),
         fg=colour,

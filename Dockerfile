@@ -2,6 +2,8 @@ FROM python:3.8
 
 RUN pip install pipenv
 
+ENV MG_KEY=
+
 WORKDIR /code
 
 COPY Pipfile* ./
