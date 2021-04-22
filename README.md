@@ -2,7 +2,26 @@
 
 An internal tool for checking site SSL Certificate expiry. Ideally it would be run once a fortnight.
 
-## Run checks
+## Commands
+
+- `ssl_checker <domain name>`
+- `check_all_ssl`
+
+## In docker
+
+### Build image:
+
+`$ docker build . -t ssl-checker`
+
+### Check all urls:
+
+`$ docker run --rm ssl-checker`
+
+### Check individual certificate:
+
+`$ docker run --rm ssl-checker ./ssl-checker.py ssl-checker example.com`
+
+## Without Docker
 
 ### Check all urls
 
@@ -14,7 +33,7 @@ An internal tool for checking site SSL Certificate expiry. Ideally it would be r
 
 ## Setup
 
-This Guide assumes you have [pipenv](https://github.com/pypa/pipenv) and Python 3.7 installed on your system.
+This Guide assumes you have [pipenv](https://github.com/pypa/pipenv) and Python 3.8 installed on your system.
 
 ### Initial project setup
 
